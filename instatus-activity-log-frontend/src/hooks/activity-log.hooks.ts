@@ -11,8 +11,12 @@ export const useActivityLogHooks = () => {
     setTimeout(() => {
       setData((prevData) => [...prevData, ...MOCK_DATA]);
       setIsLoading(false);
-    }, 2000);
+    }, 200);
   }, []);
 
-  return { loadMoreData };
+  const fetchResults = useCallback(async (searchTerm = "", page = 1) => {
+    console.log("fetchResults searchTerm=", searchTerm, ", page=", page);
+    setIsLoading(false);
+  }, []);
+  return { loadMoreData, fetchResults };
 };
