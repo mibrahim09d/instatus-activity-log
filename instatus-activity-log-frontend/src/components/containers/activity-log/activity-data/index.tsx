@@ -1,11 +1,12 @@
 import { ActivityLogDataType } from "@/types/activity-log-data.type";
 import { formatShortDate } from "@/utils/utils";
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { ActivityInformationDialog } from "../activity-information-dialog";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 export interface ActivityDataProps {
   activityData: ActivityLogDataType[];
@@ -13,8 +14,8 @@ export interface ActivityDataProps {
 
 export const ActivityData = ({ activityData }: ActivityDataProps) => {
   const [selectedId, setSelectedId] = useState<string | undefined>();
-  const renderSingleItem = (text: string, showInitials = false) => (
-    <Grid item lg={4} xs={4}>
+  const renderSingleItem = (size: number, text: string, showInitials = false) => (
+    <Grid item lg={size} xs={size}>
       <Typography fontSize="14px" fontWeight={400}>
         {showInitials && text?.length > 0 && (
           <Box display="inline-block" mr={1}>
@@ -41,6 +42,11 @@ export const ActivityData = ({ activityData }: ActivityDataProps) => {
       </Typography>
     </Grid>
   );
+  const renderViewIcon = () => (
+    <Grid item lg={1} xs={1} justifyContent={"right"} display={'flex'}>
+      <KeyboardArrowRightIcon sx={{ color: "#EEE" }} />
+    </Grid>
+  );
 
   const renderActivityDataLine = (activity: ActivityLogDataType) => (
     <Grid
@@ -50,9 +56,10 @@ export const ActivityData = ({ activityData }: ActivityDataProps) => {
       className="hover:cursor-pointer"
       onClick={() => setSelectedId(activity.id)}
     >
-      {renderSingleItem(activity.target_name, true)}
-      {renderSingleItem(activity.action?.name)}
-      {renderSingleItem(formatShortDate(activity.occurred_at))}
+      {renderSingleItem(4, activity.target_name, true)}
+      {renderSingleItem(4, activity.action?.name)}
+      {renderSingleItem(3, formatShortDate(activity.occurred_at))}
+      {renderViewIcon()}
     </Grid>
   );
   const renderActivityDataInformation = (activity: ActivityLogDataType) => (

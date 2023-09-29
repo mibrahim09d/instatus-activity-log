@@ -22,8 +22,8 @@ export const ActivityLogLayout = () => {
     />
   );
 
-  const renderTitleTypography = (text: string) => (
-    <Grid item lg={4} xs={4}>
+  const renderTitleTypography = (text: string, size = 4) => (
+    <Grid item lg={size} xs={size}>
       <Typography
         variant="h5"
         textTransform="uppercase"
@@ -39,15 +39,9 @@ export const ActivityLogLayout = () => {
 
   const renderInternalTable = () => (
     <Grid container spacing={2}>
-      <Grid item lg={4} xs={4}>
         <RectangularSkeleton />
-      </Grid>
-      <Grid item lg={4} xs={4}>
         <RectangularSkeleton />
-      </Grid>
-      <Grid item lg={4} xs={4}>
         <RectangularSkeleton />
-      </Grid>
     </Grid>
   );
 
@@ -55,7 +49,7 @@ export const ActivityLogLayout = () => {
     <Grid container spacing={2}>
       {renderTitleTypography("Actor")}
       {renderTitleTypography("Action")}
-      {renderTitleTypography("Date")}
+      {renderTitleTypography("Date", 3)}
     </Grid>
   );
 
