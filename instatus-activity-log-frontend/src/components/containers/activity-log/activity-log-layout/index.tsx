@@ -3,11 +3,31 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useActivityLogContext } from "@/contexts/activity-log/activity-log.context";
 import { useActivityLogHooks } from "@/hooks/activity-log.hooks";
 import { ActivityData } from "../activity-data";
+import debounce from "lodash.debounce";
+import { useEffect, useMemo, useState } from "react";
 
 export const ActivityLogLayout = () => {
-  const { loadMoreData } = useActivityLogHooks();
-
+  const { loadMoreData, fetchResults } = useActivityLogHooks();
   const { data, isLoading } = useActivityLogContext();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChange = (e: any) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const debouncedResults = useMemo(() => {
+    return debounce(handleChange, 500);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  }, [debouncedResults]);
+
+  useEffect(() => {
+    fetchResults(searchTerm);
+  }, [searchTerm]);
 
   const renderSearchBox = () => (
     <TextField
@@ -16,6 +36,7 @@ export const ActivityLogLayout = () => {
           padding: 10,
         },
       }}
+      onChange={debouncedResults}
       sx={{ borderColor: "#E0E0DF", mb: 2 }}
       fullWidth
       placeholder="Search name, email or action..."
@@ -39,9 +60,9 @@ export const ActivityLogLayout = () => {
 
   const renderInternalTable = () => (
     <Grid container spacing={2}>
-        <RectangularSkeleton />
-        <RectangularSkeleton />
-        <RectangularSkeleton />
+      {[...Array(3)].map((_, index) => (
+        <RectangularSkeleton key={index} />
+      ))}
     </Grid>
   );
 
@@ -63,7 +84,7 @@ export const ActivityLogLayout = () => {
 
   const renderLoadingState = () => (
     <>
-      {Array.from({ length: 5 }).map((_, index) => (
+      {[...Array(5)].map((_, index) => (
         <Box key={index}>{renderInternalTable()}</Box>
       ))}
     </>
@@ -81,6 +102,21 @@ export const ActivityLogLayout = () => {
           {renderTitles()}
         </Box>
         <Box p={2}>
+          {!isLoading && (!data || data.length === 0) && (
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              minHeight={"80px"}
+            >
+              <Box textAlign={"center"}>
+                <Typography fontSize={15} mb={3}>
+                  Start by creating a new event
+                </Typography>
+                <Typography fontSize={14}>It looks so lonely here</Typography>
+              </Box>
+            </Box>
+          )}
           {data?.length > 0 && <ActivityData activityData={data} />}
           {isLoading && renderLoadingState()}
         </Box>
