@@ -76,16 +76,22 @@ export const ActivityLogLayout = () => {
   );
 
   return (
-    <Box borderRadius="10px" overflow="hidden" border="1px solid #F0F0F0">
-      <Box bgcolor="#F5F5F5" p={2}>
-        {renderSearchBox()}
-        {renderTitles()}
+    <Box
+      borderRadius="10px"
+      border="1px solid #F0F0F0"
+      className="overflow-visible"
+    >
+      <Box className="relative">
+        <Box bgcolor="#F5F5F5" p={2}>
+          {renderSearchBox()}
+          {renderTitles()}
+        </Box>
+        <Box p={2}>
+          {data?.length > 0 && <ActivityData activityData={data} />}
+          {isLoading && renderLoadingState()}
+        </Box>
+        {renderLoadMoreButton()}
       </Box>
-      <Box p={2}>
-        {data?.length > 0 && <ActivityData activityData={data} />}
-        {isLoading && renderLoadingState()}
-      </Box>
-      {renderLoadMoreButton()}
     </Box>
   );
 };

@@ -12,8 +12,10 @@ export const ActivityInformationDialog = ({
       <Box
         sx={{
           minHeight: "5vh",
-          width: "100%",
-          backgroundColor: "red",
+          width: "110%",
+          backgroundColor: "gray",
+          margin: "0 0 0 -5%",
+          boxShadow: "0 3px 6px 1px rgba(0, 0, 0, 0.16)",
         }}
       >
         Test

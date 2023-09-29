@@ -56,7 +56,9 @@ export const ActivityData = ({ activityData }: ActivityDataProps) => {
     </Grid>
   );
   const renderActivityDataInformation = (activity: ActivityLogDataType) => (
-    <ActivityInformationDialog activity={activity} />
+    <Box mt={2} mb={2}>
+      <ActivityInformationDialog activity={activity} />
+    </Box>
   );
 
   return (
