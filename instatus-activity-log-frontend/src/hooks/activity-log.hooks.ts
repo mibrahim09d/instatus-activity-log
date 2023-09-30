@@ -1,22 +1,30 @@
-import { MOCK_DATA } from "@/constants/generic.constants";
+import { API } from "@/common/api";
+import { MAX_PAGE_SIZE } from "@/constants/generic.constants";
 import { useActivityLogContext } from "@/contexts/activity-log/activity-log.context";
+import { debug } from "console";
 import { useCallback } from "react";
 
 export const useActivityLogHooks = () => {
-  const { data, isLoading, setData, setIsLoading } = useActivityLogContext();
+  const { page, setPage, data, setData, setIsLoading } =
+    useActivityLogContext();
 
-  const loadMoreData = useCallback(async () => {
+  const fetchResults = useCallback(async (searchTerm = "") => {
     setIsLoading(true);
-    // do api call..
-    setTimeout(() => {
-      setData((prevData) => [...prevData, ...MOCK_DATA]);
-      setIsLoading(false);
-    }, 200);
-  }, []);
+    try {
+      const { data: result } = await API.get(
+        encodeURI(`/events?page=${page}&pageSize=${MAX_PAGE_SIZE}`)
+      );
 
-  const fetchResults = useCallback(async (searchTerm = "", page = 1) => {
-    console.log("fetchResults searchTerm=", searchTerm, ", page=", page);
-    setIsLoading(false);
-  }, []);
-  return { loadMoreData, fetchResults };
+      if (result?.length > 0) {
+        setPage(page + 1);
+      }
+      setData([...data, ...result]);
+    } catch {
+      console.log("Failed to fetch!");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [page]);
+
+  return { fetchResults };
 };

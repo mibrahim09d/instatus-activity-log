@@ -1,8 +1,8 @@
 import { Expose, Type } from 'class-transformer';
 
 class ActionDto {
-  @Expose()
-  uuid: string;
+  @Expose({ name: 'uuid' })
+  id: string;
 
   @Expose()
   object: string;
@@ -23,8 +23,8 @@ class MetadataDto {
 }
 
 export class ActivityEventLogResponse {
-  @Expose()
-  uuid: string;
+  @Expose({ name: 'uuid' })
+  id: string;
 
   @Expose()
   actor_id: string;
@@ -45,6 +45,7 @@ export class ActivityEventLogResponse {
   location: string;
 
   @Expose()
+  @Type(() => Date)
   occurred_at: Date;
 
   @Expose()

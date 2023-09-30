@@ -7,8 +7,8 @@ import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState } from "react";
 
 export const ActivityLogLayout = () => {
-  const { loadMoreData, fetchResults } = useActivityLogHooks();
-  const { data, isLoading } = useActivityLogContext();
+  const { fetchResults } = useActivityLogHooks();
+  const { data, isLoading, setPage, setData } = useActivityLogContext();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e: any) => {
@@ -26,6 +26,8 @@ export const ActivityLogLayout = () => {
   }, [debouncedResults]);
 
   useEffect(() => {
+    setPage(1);
+    setData([]);
     fetchResults(searchTerm);
   }, [searchTerm]);
 
@@ -76,7 +78,10 @@ export const ActivityLogLayout = () => {
 
   const renderLoadMoreButton = () => (
     <Box bgcolor="#F5F5F5" p={2} justifyContent="center" display="flex">
-      <Button className="text-[#475569] font-semibold" onClick={loadMoreData}>
+      <Button
+        className="text-[#475569] font-semibold"
+        onClick={() => fetchResults(searchTerm)}
+      >
         Load More
       </Button>
     </Box>

@@ -55,7 +55,10 @@ export const ActivityInformationDialog = ({
     <Grid lg={4} xs={12}>
       <Grid container spacing={2}>
         {renderTitle("Date")}
-        {renderItem("Readable", formatShortDate(activity.occurred_at))}
+        {renderItem(
+          "Readable",
+          formatShortDate(new Date(activity.occurred_at))
+        )}
       </Grid>
     </Grid>
   );

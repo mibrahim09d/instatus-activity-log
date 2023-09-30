@@ -14,12 +14,15 @@ export const ActivityLogProvider: React.FC<ActivityLogProviderProps> = ({
 }) => {
   const [data, setData] = useState<ActivityLogDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
   const contextValue: ActivityLogContextType = {
     data,
     isLoading,
+    page,
     setData,
     setIsLoading,
+    setPage,
   };
 
   return (

@@ -14,7 +14,11 @@ export interface ActivityDataProps {
 
 export const ActivityData = ({ activityData }: ActivityDataProps) => {
   const [selectedId, setSelectedId] = useState<string | undefined>();
-  const renderSingleItem = (size: number, text: string, showInitials = false) => (
+  const renderSingleItem = (
+    size: number,
+    text: string,
+    showInitials = false
+  ) => (
     <Grid item lg={size} xs={size}>
       <Typography fontSize="14px" fontWeight={400}>
         {showInitials && text?.length > 0 && (
@@ -43,7 +47,7 @@ export const ActivityData = ({ activityData }: ActivityDataProps) => {
     </Grid>
   );
   const renderViewIcon = () => (
-    <Grid item lg={1} xs={1} justifyContent={"right"} display={'flex'}>
+    <Grid item lg={1} xs={1} justifyContent={"right"} display={"flex"}>
       <KeyboardArrowRightIcon sx={{ color: "#EEE" }} />
     </Grid>
   );
@@ -58,7 +62,7 @@ export const ActivityData = ({ activityData }: ActivityDataProps) => {
     >
       {renderSingleItem(4, activity.target_name, true)}
       {renderSingleItem(4, activity.action?.name)}
-      {renderSingleItem(3, formatShortDate(activity.occurred_at))}
+      {renderSingleItem(3, formatShortDate(new Date(activity.occurred_at)))}
       {renderViewIcon()}
     </Grid>
   );
