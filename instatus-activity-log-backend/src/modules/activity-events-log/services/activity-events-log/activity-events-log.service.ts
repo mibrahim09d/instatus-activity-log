@@ -28,6 +28,11 @@ export class ActivityEventsLogService {
         OR: [
           { actor_id: { contains: filterString } },
           { target_id: { contains: filterString } },
+          {
+            action: {
+              name: { contains: filterString },
+            },
+          },
         ],
       };
     }

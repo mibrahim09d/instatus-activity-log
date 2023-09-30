@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 
 export const ActivityLogLayout = () => {
   const { fetchResults } = useActivityLogHooks();
-  const { data, isLoading, setPage, setData } = useActivityLogContext();
+  const { data, isLoading, page, setPage } = useActivityLogContext();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e: any) => {
@@ -27,8 +27,7 @@ export const ActivityLogLayout = () => {
 
   useEffect(() => {
     setPage(1);
-    setData([]);
-    fetchResults(searchTerm);
+    fetchResults(1, searchTerm);
   }, [searchTerm]);
 
   const renderSearchBox = () => (
@@ -80,7 +79,7 @@ export const ActivityLogLayout = () => {
     <Box bgcolor="#F5F5F5" p={2} justifyContent="center" display="flex">
       <Button
         className="text-[#475569] font-semibold"
-        onClick={() => fetchResults(searchTerm)}
+        onClick={() => fetchResults(page, searchTerm)}
       >
         Load More
       </Button>
