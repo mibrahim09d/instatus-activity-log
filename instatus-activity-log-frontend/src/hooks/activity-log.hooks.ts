@@ -33,6 +33,6 @@ export const useActivityLogHooks = () => {
     },
     [data]
   );
-
+  
   return { fetchResults };
 };

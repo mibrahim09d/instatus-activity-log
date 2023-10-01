@@ -3,7 +3,7 @@ import { PrismaService } from 'src/common/prisma/services/primsa.service';
 import { PaginatedRequest } from '../../dto/requests/paginated.dto';
 import { CreateEventCommand } from '../../dto/commands/create-event-command.dto';
 import { Prisma } from '@prisma/client';
-import { plainToClass, plainToInstance } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { ActivityEventLogResponse } from '../../dto/response/activity-event-log.dto';
 
 @Injectable()
